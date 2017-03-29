@@ -124,9 +124,11 @@
 					
 					openkey = localStorage.getItem("openkey");
 					$("#openkey").val(openkey);
+					$("#openkeyspan").html(openkey);
 					$("#privkey").html(localStorage.getItem("privkey"));
 					privkey = localStorage.getItem("privkey");
 					
+			
 					
 					$("#ethqr").prop("src","https://chart.googleapis.com/chart?chs=100x100&cht=qr&chl="+openkey+"&choe=UTF-8&chld=L|0");
 						  
@@ -272,7 +274,7 @@ function recalc() {
 	function s(n,v){localStorage.setItem(n,v);}
 								
 	function build_state() {
-		if (option_registration_backend == "") s("registered",1);
+		
 		$("#mysmart").prop('href',"https://etherscan.io/address/"+erc20contract_address);
 		if (g("registered")==1) {
 			$("#name").hide();
@@ -287,6 +289,10 @@ function recalc() {
 		}
 									
 	if (bs("name")) {
+		if (option_registration_backend == "" && g("registered")!=1) { 
+			s("registered",1); 
+			build_state();
+		}
 		$("div.email").show();
 		$("#email").focus();
 			if (bs("email")) {

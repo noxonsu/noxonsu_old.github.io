@@ -46,7 +46,7 @@
 					<!-- .b-form-cont -->
                     <div class="b-form-cont">
 						<div style='float:right;padding:22px 18px;'>
-						<a href="#" id='exprta' onclick='sv("noxonfund.com_keys.txt",msg);return false'>Export plain keys</a>  | <a href="#" onclick='localStorage.clear();window.location.reload();return false'>Exit</a>
+						<a href="#" id='exprta' onclick='sv("noxonfund.com_keys.txt",getmsg());return false'>Export plain keys</a>  | <a href="#" onclick='localStorage.clear();window.location.reload();return false'>Exit</a>
 						</div>
 						<h2 class="b-form-cont__title" id='hiname'>Hi</h2> 
 							<div class="b-form b-form--place container-fluid">
@@ -58,12 +58,15 @@
 								<div id='balancediv'>
 								 <span class='balacnetokens'></span> TOKEN(s) <Br><br>
 								</div>
-								
+								Your unique key: <span id='openkeyspan'></span>
 								<div id='savekey'>
 								Save your private key! We do not store your private keys and will not be able to restore them. Withdraw all amounts of TOKEN to your own ethereum wallet for best security.
-								<br><br><a href='#' class='btn' onclick='sv("noxonfund.com_keys.txt",msg);return false'>download keys</a> 
+								<br><br><a href='#' class='btn' onclick='sv("noxonfund.com_keys.txt",getmsg());return false'>download keys</a> 
 								<script>
-								msg = 'Your '+window.location+' keys: '+localStorage.getItem("privkey")+":"+localStorage.getItem("openkey");
+								function getmsg() {
+									return 'Your '+window.location+' keys: '+localStorage.getItem("privkey")+":"+localStorage.getItem("openkey");
+								}
+								
 								
 								</script>
 								</div>
@@ -103,11 +106,11 @@
 									Transfer between shareholders enabled. When you get or buy TOKENs the form will be displayed here
 									</div>
 								</div>
+								
 							</div>
 					</div>
                     <!-- .b-form-cont -->
                 </div>
-				
 				
 				<div class="col-md-12 " id='a4'>
  
