@@ -55,7 +55,9 @@ And now you can see contract address (0x….). Copy it to bufer (ctrl + c).
 Click FORK at bottom of this page <img src='http://dl4.joxi.net/drive/2017/03/28/0004/2038/272374/74/8ad7b348b6.jpg'>. You may need to create your own GitHub account. 
 
 <h2>4 Run the dashboard</h2>
-<li>4.1 Go to cloned repositary settings and rename repositary to {yourgithublogin}.github.io</li>
-<li>4.2 Go to erc2dashboard.js click Edit and "ctrl + v" ERC20 contract from bufer to "erc20contract_address" var. Click save.</li>
-<li>4.3 Done. Now you can see your dashboard at https://{yourgithublogin}.github.io </li>
-<li>4.4 Now you can add custom domain. https://help.github.com/articles/quick-start-setting-up-a-custom-domain/ </li>
+4.1 Go to cloned repositary settings and rename repositary to {yourgithublogin}.github.io<br>
+4.2 Go to erc2dashboard.js click Edit and "ctrl + v" ERC20 contract from bufer to "erc20contract_address" var. <br>
+<img src='http://dl3.joxi.net/drive/2017/03/29/0004/2038/272374/74/8828b4f92f.jpg'>
+Then Click save. <br>
+4.3 Done. Now you can see your dashboard at https://{yourgithublogin}.github.io <br>
+4.4 Now you can add custom domain. https://help.github.com/articles/quick-start-setting-up-a-custom-domain/
