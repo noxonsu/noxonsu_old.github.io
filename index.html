@@ -52,13 +52,13 @@
 							<div class="b-form b-form--place container-fluid">
 								<div class="b-form__row">
 								<div id='topupbalance'>
-								For buy NXP tokens you must topup your balance! Using <a href="#" onclick='$("#openkey").focus().select()'>this form</a>. 
+								For buy TOKENs you must topup your balance! Using <a href="#" onclick='$("#openkey").focus().select()'>this form</a>. 
 								</div>
 								
 								<div id='balancediv'>
-								 <span class='balacnetokens'></span> TOKEN(s) <Br><br>
+								 <span class='balacnetokens'></span> TOKEN(s) you have<Br><br>
 								</div>
-								Your unique key: <span id='openkeyspan'></span>
+								<span id='uniqkey' >Your unique PUBLIC key: <span id='openkeyspan'></span> </span>
 								<div id='savekey'>
 								Save your private key! We do not store your private keys and will not be able to restore them. Withdraw all amounts of TOKEN to your own ethereum wallet for best security.
 								<br><br><a href='#' class='btn' onclick='sv("noxonfund.com_keys.txt",getmsg());return false'>download keys</a> 
@@ -97,7 +97,7 @@
 									<script>
 									function try2send() {
 										$("#consolesend").html('.:...::');
-										sendRwTr(0,"0xa9059cbb"+EthJS.ABI.rawEncode(["address","uint"],[$("#kuda").val(),$("#skoko").val()]).toString("hex"));
+										sendRwTr(0,"0xa9059cbb"+EthJS.ABI.rawEncode(["address","uint"],[$("#kuda").val(),$("#skoko").val()]).toString("hex"),"#consolesend");
 									}
 									</script>
 									</div>

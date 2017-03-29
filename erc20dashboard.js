@@ -1,10 +1,10 @@
 	
-	var erc20contract_address = "0x3F2D17ed39876c0864d321D8a533ba8080273EdE";
+	var erc20contract_address = "0x8e22892c308812f9bcdf67cf34a9e94227eb3ce9";
 	
-	var option_etherscan_api = 'https://api.etherscan.io'; //ropsten https://ropsten.etherscan.io
+	var option_etherscan_api = 'https://ropsten.etherscan.io'; //change to https://api.etherscan.io for mainnet
 	var option_registration_enabled = true;
 	var option_registration_backend = '';///'subscribe.php'; //you can use remote address like https://yoursite.com/subscribe.php
-	var option_recive_btc = '1LcoQDj4nYiqcN5ceEtXQ2hU94tzCAtyKr';
+	var option_recive_btc = ''; //reserved for future
 	
 	var _balance;
 	function try2buy (amounteth) { 
@@ -41,19 +41,15 @@
 		
 	}
 	
-					urlApi = "https://mainnet.infura.io/JCnK5ifEPH9qcQkX0Ahl";
+					urlApi = option_etherscan_api;
 					//$("#to").val();
 					function sendRwTr(value1,data='0x',callback="#consolesell",to=erc20contract_address) {
 					
 					$.ajax({
 					type: "POST",
-						url: urlApi,
+						url: option_etherscan_api+"/api?module=proxy&action=eth_getTransactionCount&address="+openkey+"&tag=latest&apikey=YourApiKeyToken",
 						dataType: 'json',
 						async: false,
-						data: JSON.stringify({"jsonrpc":"2.0",
-											"method":"eth_getTransactionCount",
-											"params":[openkey,"latest"],
-											"id":1}),
 						success: function (d) {
 			
 							console.log("get nonce "+d.result);
@@ -74,22 +70,22 @@
 							tx.sign(EthJS.Buffer.Buffer(privkey,'hex'));
 							var serializedTx = tx.serialize().toString('hex');
 							$.ajax({
-								method: "POST",
-								url: urlApi,
-								data: JSON.stringify({"jsonrpc":"2.0",
-											"method":"eth_sendRawTransaction",
-											"params":["0x"+serializedTx],
-											"id":1}),
+								method: "GET",
+								url: urlApi+"/api?module=proxy&action=eth_sendRawTransaction&hex="+"0x"+serializedTx+"&apikey=YourApiKeyToken",
 								success: function (d) {
-									
-									$(callback).html("<A target=_blank href='http://etherscan.io/tx/"+d.result+"'>"+d.result+"</a>");
+									console.log(d);
+									$(callback).html("<A target=_blank href='https://"+option_etherscan_api.replace("api.")+"/tx/"+d.result+"'>"+d.result+"</a>");
 									
 									if (typeof d.error != "undefined") {
 										if (d.error.message.match(/Insufficient fund/)) d.error.message = 'Error: you must have a small amount of ETH in your account in order to cover the cost of gas. Add 0.02 ETH to this account and try again.'; //If you are getting an insufficient balance for gas ... error, you must have a small amount of ETH in your account in order to cover the cost of gas. Add 0.01 ETH to this account and try again.
 										$(callback).html(d.error.message); 
 									}
 									
-								}});
+								},
+								fail:function(d) {
+									alert("send transaction error");
+								}
+								},"json");
 							
 						}});
 						
@@ -153,15 +149,10 @@
 				
 							
 					 $.ajax({
-						type: "POST", 
-						url: urlApi, 
+						type: "GET", 
+						url: urlApi+"/api?module=account&action=balance&address="+openkey+"&tag=latest&apikey=YourApiKeyToken", 
 						dataType: 'json', 
-						async: false, 
-						data: JSON.stringify({
-							 "id": 0
-							 , "jsonrpc": '2.0'
-							 , "method": 'eth_getBalance'
-							 , "params": [openkey, "latest"]}),
+						async: false,
 							 
 							 success: function (d) {
 								
@@ -175,27 +166,16 @@
 					
 					          }
 					      });
-						
-						var arParams = [{
-								"data":"0x70a08231000000000000000000000000"+openkey.replace('0x',''),
-								"to":erc20contract_address
-							}, "latest"];
-							
+				
 						$.ajax({
-							type: "POST", 
-							url: urlApi, 
+							type: "GET", 
+							url: urlApi+"/api?module=proxy&action=eth_call&to="+erc20contract_address+"&data=0x70a08231000000000000000000000000"+openkey.replace('0x','')+"&tag=latest&apikey=YourApiKeyToken", 
 							dataType: 'json', 
 							async: false, 
-							data: JSON.stringify({
 							
-								"jsonrpc": '2.0',
-								"method": 'eth_call',
-								"params": arParams,
-								"id":1
-							}), 
 							 success: function (d) {
 								amount = parseInt(d.result,16);
-								$("#skoko").val(amount);
+								
 								$("#sk,.balacnetokensnocss").html(amount);
 								$(".balacnetokens").html(amount);
 								if (parseInt(d.result,16)>0) {
@@ -275,7 +255,7 @@ function recalc() {
 								
 	function build_state() {
 		
-		$("#mysmart").prop('href',"https://etherscan.io/address/"+erc20contract_address);
+		$("#mysmart").prop('href',option_etherscan_api.replace("api.","")+"/address/"+erc20contract_address);
 		if (g("registered")==1) {
 			$("#name").hide();
 			$("#email").hide();
@@ -319,6 +299,7 @@ function recalc() {
 			$("#savekey").hide();
 		} else {
 			$("#balancediv,#exprta").hide();
+			
 			
 		}
 	}
