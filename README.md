@@ -1,18 +1,12 @@
 # ERC20_widgets
 Minimal &amp; secure ERC20 dashboard/wallet. using lightwallet.js, ethereumjs &amp; etherscan as node provider
 
-<a href="">Minimal Demo</a> | <a href="">Full featured demo</a>
+<a href="https://noxonsu.github.io/">Demo</a>
 
 Designed special for <a href="http://ethereum.org/token">ERC20 projects</a>. Just insert address of ERC20 smart contract and wallet ready to go. 
 
 # Secure
-All logic of this dashboard workink on front-end (in users browser). All
-
-# Mailchimp integration
-Upload mailchim_connector.php in the same folder with wallet.html and provide your API key. All users will be add his email to mailer List on mailchimp.
-
-# Easy EMBED integration to any sites and site builders (like Tilda). 
-Just embed wallet.html to iframe. 
+All the logic of this panel working on the front-end (in the user's browser), the user himself keeps his keys, never sends to our or another server. Snx for lightwallet.js
 
 # Install
 
@@ -45,10 +39,15 @@ contract MyToken {
 </pre>
 MINIMUM VIABLE TOKEN from https://ethereum.org/token
 
-2.2 
-Go to Environment. Select  Web3 
-Click Injected Web3 
-And now you can see contract address (0x….). Copy it to bufer (ctrl + c). 
+2.2 Go to Environment. 
+2.3 Select  "Injected Web3" 
+2.4 set "initial suply" as you want (e.x. 10000 tokens)
+2.5 click create
+2.6 wait about 30 seconds and copy your contract address (0x....) to buffer.
+
+<a href="http://dl4.joxi.net/drive/2017/03/29/0004/2038/272374/74/1f1c454c18.jpg" target="_blank">
+<img src="http://dl4.joxi.net/drive/2017/03/29/0004/2038/272374/74/1f1c454c18.jpg">
+</a>
 
 <h2>3 Fork this project</h2>
 
