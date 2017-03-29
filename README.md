@@ -38,16 +38,18 @@ contract MyToken {
 }
 </pre>
 MINIMUM VIABLE TOKEN from https://ethereum.org/token
-
-2.2 Go to Environment. 
-2.3 Select  "Injected Web3" 
-2.4 set "initial suply" as you want (e.x. 10000 tokens)
-2.5 click create
-2.6 wait about 30 seconds and copy your contract address (0x....) to buffer.
-
+<br><br>
 <a href="http://dl4.joxi.net/drive/2017/03/29/0004/2038/272374/74/1f1c454c18.jpg" target="_blank">
 <img src="http://dl4.joxi.net/drive/2017/03/29/0004/2038/272374/74/1f1c454c18.jpg">
 </a>
+<br><br>
+2.2 Go to Environment. <br>
+2.3 Select  "Injected Web3" <br>
+2.4 set "initial suply" as you want (e.x. 10000 tokens)<br>
+2.5 click create<br>
+2.6 wait about 30 seconds and copy your contract address (0x....) to buffer.<br>
+
+
 
 <h2>3 Fork this project</h2>
 
