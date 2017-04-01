@@ -56,9 +56,11 @@ MINIMUM VIABLE TOKEN from https://ethereum.org/token
 Click FORK at bottom of this page <img src='http://dl4.joxi.net/drive/2017/03/28/0004/2038/272374/74/8ad7b348b6.jpg'>. You may need to create your own GitHub account. 
 
 <h2>4 Run the dashboard</h2>
+<img src="http://dl4.joxi.net/drive/2017/04/02/0004/2038/272374/74/0395e82e1e.jpg">
 4.1 Go to cloned repositary settings and rename repositary to {yourgithublogin}.github.io<br>
+
 4.2 Go to erc2dashboard.js click Edit and "ctrl + v" ERC20 contract from bufer to "erc20contract_address" var. <br>
-<img src='http://dl3.joxi.net/drive/2017/03/29/0004/2038/272374/74/8828b4f92f.jpg'>
+<img src='http://dl3.joxi.net/drive/2017/04/02/0004/2038/272374/74/29edaae900.jpg'>
 Then Click save. <br>
 4.3 Done. Now you can see your dashboard at https://{yourgithublogin}.github.io <br>
 4.4 Now you can add custom domain. https://help.github.com/articles/quick-start-setting-up-a-custom-domain/
