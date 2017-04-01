@@ -57,7 +57,7 @@ Click FORK at bottom of this page <img src='http://dl4.joxi.net/drive/2017/03/28
 
 <h2>4 Run the dashboard</h2>
 
-4.1 Go to cloned repositary  settings (1), click "edit" (2) and rename repositary to {yourgithublogin}.github.io (3)<br>
+4.1 Go to cloned repositary  settings (1)  and rename repositary to {yourgithublogin}.github.io (2,3)<br>
 <img src="http://dl4.joxi.net/drive/2017/04/02/0004/2038/272374/74/0395e82e1e.jpg">
 <br>
 4.2 Go to Code  > erc2dashboard.js (1) > click Edit (2) and "ctrl + v" ERC20 contract from bufer to "erc20contract_address" var (3). <br>
