@@ -192,7 +192,7 @@
 					rebuild_buttons();
 					if ($("#openkey").val() == '') $("#openkey").val(openkey);
 					
-					recalc();
+					
 				}
 				
 				
@@ -269,7 +269,6 @@ function recalc() {
 			$(".mainboard").show();
 			$("#btcaddress").val(g("btc"));
 		} else{
-			$("#right").show();
 			var $grid = jQuery('#info2').masonry({
 						itemSelector: '.griditem',
 						
@@ -277,6 +276,7 @@ function recalc() {
 					});
 					
 			$grid.masonry();
+			$("#right").show();
 			recalc();
 		}
 									
