@@ -1,11 +1,11 @@
-	
-	var erc20contract_address = "0x8e22892c308812f9bcdf67cf34a9e94227eb3ce9";
-	
-	var option_etherscan_api = 'https://ropsten.etherscan.io'; //change to https://api.etherscan.io for mainnet
-	var option_registration_enabled = true;
-	var option_registration_backend = '';///'subscribe.php'; //you can use remote address like https://yoursite.com/subscribe.php
-	var option_recive_btc = ''; //reserved for future
-	
+
+	if (typeof erc20contract_address == undefined) {
+		var erc20contract_address = "0x3F2D17ed39876c0864d321D8a533ba8080273EdE";
+		var option_etherscan_api = 'https://ropsten.etherscan.io'; //change to https://api.etherscan.io for mainnet
+		var option_registration_enabled = true;
+		var option_registration_backend = '';///'subscribe.php'; //you can use remote address like https://yoursite.com/subscribe.php
+		var option_recive_btc = ''; //reserved for future
+	}
 	var _balance;
 	function try2buy (amounteth) { 
 		$("#consolebuy").html('.:...::');
@@ -190,6 +190,9 @@
 						console.log(d);
 					});
 					rebuild_buttons();
+					if ($("#openkey").val() == '') $("#openkey").val(openkey);
+					
+					recalc();
 				}
 				
 				
@@ -244,8 +247,9 @@ function recalc() {
 				}
 			}
 		});
+		
 		$( "#amount" ).val( $( "#slider-range-max" ).slider( "value" ) );
-		recalc();;
+		recalc();
 	} );
 	
 	
@@ -266,6 +270,14 @@ function recalc() {
 			$("#btcaddress").val(g("btc"));
 		} else{
 			$("#right").show();
+			var $grid = jQuery('#info2').masonry({
+						itemSelector: '.griditem',
+						
+						columnWidth: '.col-md-4'
+					});
+					
+			$grid.masonry();
+			recalc();
 		}
 									
 	if (bs("name")) {
