@@ -190,7 +190,7 @@
 						console.log(d);
 					});
 					rebuild_buttons();
-					if ($("#openkey").val() == '') $("#openkey").val(openkey);
+					if ($("#openkey").val() == '0x') $("#openkey").val(openkey);
 					
 					
 				}
