@@ -253,7 +253,15 @@ function recalc() {
 	} );
 	
 	
-	
+	function build_masonry() {
+		var $grid = jQuery('#info2').masonry({
+						itemSelector: '.griditem',
+						
+						columnWidth: '.col-md-4'
+					});
+					
+			$grid.masonry();
+		}
 	function g(n){return localStorage.getItem(n);}
 	function s(n,v){localStorage.setItem(n,v);}
 								
@@ -268,14 +276,8 @@ function recalc() {
 			$("#info2").show();
 			$(".mainboard").show();
 			$("#btcaddress").val(g("btc"));
+			build_masonry();
 		} else{
-			var $grid = jQuery('#info2').masonry({
-						itemSelector: '.griditem',
-						
-						columnWidth: '.col-md-4'
-					});
-					
-			$grid.masonry();
 			$("#right").show();
 			recalc();
 		}
@@ -296,9 +298,11 @@ function recalc() {
 						s("registered",1);
 						s("btc",d.btc)
 						build_state();
+						build_masonry();
 					},"json").fail(function(){
 						alert("backend connection error");
 					});
+					
 				}
 			} else {
 				$("div.pass").hide();
