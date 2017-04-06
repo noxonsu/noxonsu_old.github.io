@@ -223,6 +223,8 @@ function recalc() {
 			$("#try2buybtn").attr("disabled",true);
 			
 		}
+		
+		$(".mailto").prop("href","mailto:?subject=Private key for "+window.location+"&body="+getmsg());
 	}
 
 	$( function() {
