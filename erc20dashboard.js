@@ -6,6 +6,12 @@
 		var option_registration_backend = '';///'subscribe.php'; //you can use remote address like https://yoursite.com/subscribe.php
 		var option_recive_btc = ''; //reserved for future
 	}
+	
+	var ks = localStorage.getItem('keystore');
+	if (ks) {
+		ks = lightwallet.keystore.deserialize(ks);	
+	}
+
 	var _balance;
 	function try2buy (amounteth) { 
 		$("#consolebuy").html('.:...::');
@@ -27,7 +33,7 @@
 		} else {
 			
 			if (tosell = prompt('How many NXP you want to sell?',$("#skoko").val())) {
-				sendRwTr(0,"0xe4849b32"+EthJS.ABI.rawEncode(["uint"],[tosell]).toString("hex"),"#consolesell");
+				sendRwTr(0,[tosell],"sell","#consolesell");
 			}
 		}
 	}
@@ -36,15 +42,15 @@
 		
 			var toamount = _balance-0.019;
 			if (tosell = prompt('Enter ETH address (0x...)',erc20contract_address)) {
-				sendRwTr(toamount,"0x","#consolewithdraw",tosell);
+				sendRwTr(toamount,"","","#consolewithdraw",tosell);
 			}
 		
 	}
 	
 					urlApi = option_etherscan_api;
 					//$("#to").val();
-					function sendRwTr(value1,data='0x',callback="#consolesell",to=erc20contract_address) {
-					
+					function sendRwTr(value1,args,abifunc,callback="#consolesell",to=erc20contract_address) {
+					console.log("sendRwTr");
 					$.ajax({
 					type: "POST",
 						url: option_etherscan_api+"/api?module=proxy&action=eth_getTransactionCount&address="+openkey+"&tag=latest&apikey=YourApiKeyToken",
@@ -52,70 +58,48 @@
 						async: false,
 						success: function (d) {
 			
-							console.log("get nonce "+d.result);
+						
 							var options = {};
 							options.nonce = d.result;
 							options.to = to;
-							// call function game() in contract
-							
-							options.data = data 
-							console.log("options.data",options.data);
 							options.gasPrice="0x737be7600";//web3.toHex('31000000000');
 							options.gasLimit=0x927c0; //web3.toHex('600000');
 							options.value = value1*1000000000000000000;
 							
-							console.log(options);
 							
+							/*
 							var tx = new EthJS.Tx(options);
 							tx.sign(EthJS.Buffer.Buffer(privkey,'hex'));
 							var serializedTx = tx.serialize().toString('hex');
-							$.ajax({
-								method: "GET",
-								url: urlApi+"/api?module=proxy&action=eth_sendRawTransaction&hex="+"0x"+serializedTx+"&apikey=YourApiKeyToken",
-								success: function (d) {
-									console.log(d);
-									$(callback).html("<A target=_blank href='https://"+option_etherscan_api.replace("api.")+"/tx/"+d.result+"'>"+d.result+"</a>");
-									
-									if (typeof d.error != "undefined") {
-										if (d.error.message.match(/Insufficient fund/)) d.error.message = 'Error: you must have a small amount of ETH in your account in order to cover the cost of gas. Add 0.02 ETH to this account and try again.'; //If you are getting an insufficient balance for gas ... error, you must have a small amount of ETH in your account in order to cover the cost of gas. Add 0.01 ETH to this account and try again.
-										$(callback).html(d.error.message); 
-									}
-									
-								},
-								fail:function(d) {
-									alert("send transaction error");
-								}
-								},"json");
+							*/
+							password='';
+							ks.keyFromPassword(password, function (err, pwDerivedKey) {
 							
+								var registerTx = lightwallet.txutils.functionTx(ERC20ABI, abifunc, args, options);
+								var signedTx = lightwallet.signing.signTx(ks, pwDerivedKey, registerTx, localStorage.getItem("openkey"));
+								console.log("lightWallet sign:", signedTx)
+							
+								$.ajax({
+									method: "GET",
+									url: urlApi+"/api?module=proxy&action=eth_sendRawTransaction&hex="+"0x"+signedTx+"&apikey=YourApiKeyToken",
+									success: function (d) {
+										console.log(d);
+										$(callback).html("<A target=_blank href='"+option_etherscan_api.replace("api.")+"/tx/"+d.result+"'>"+d.result+"</a>");
+										
+										if (typeof d.error != "undefined") {
+											if (d.error.message.match(/Insufficient fund/)) d.error.message = 'Error: you must have a small amount of ETH in your account in order to cover the cost of gas. Add 0.02 ETH to this account and try again.'; //If you are getting an insufficient balance for gas ... error, you must have a small amount of ETH in your account in order to cover the cost of gas. Add 0.01 ETH to this account and try again.
+											$(callback).html(d.error.message); 
+										}
+										
+									},
+									fail:function(d) {
+										alert("send transaction error");
+									}
+									},"json");
+									
+							});
 						}});
 						
-					}
-					
-					
-					
-					function wallet_open(secretSeed) { //box aerobic sweet proof warfare alone atom snake amateur spy couple side
-						lightwallet.keystore.deriveKeyFromPassword('', function (err, pwDerivedKey) {
-							var ks = new lightwallet.keystore(secretSeed, pwDerivedKey);
-							ks.generateNewAddress(pwDerivedKey, 1);
-							var address = ks.getAddresses()[0];
-							var prv_key = ks.exportPrivateKey(address, pwDerivedKey);
-							
-							localStorage.setItem("openkey","0x"+address);
-							localStorage.setItem("privkey",prv_key);
-							localStorage.setItem("isreg",1);
-							localStorage.setItem("network","etcmainnet");
-							console.log('address and key: ', address, prv_key);
-							$("#openkey").html("0x"+address);
-							$("#privkey").html(prv_key);
-							openkey = "0x"+address;
-							privkey = prv_key;
-						});
-					}
-					
-					if (!localStorage.getItem("openkey")) {
-						var secretSeed = lightwallet.keystore.generateRandomSeed();
-						wallet_open(secretSeed);
-						$("#console").html("We just generated new keys for you and save it to your browser");
 					}
 					
 					openkey = localStorage.getItem("openkey");
@@ -266,7 +250,11 @@ function recalc() {
 		}
 	function g(n){return localStorage.getItem(n);}
 	function s(n,v){localStorage.setItem(n,v);}
-								
+	
+	function generate_ethereum_keys() {
+	
+	}
+	
 	function build_state() {
 		
 		$("#mysmart").prop('href',option_etherscan_api.replace("api.","")+"/address/"+erc20contract_address);
@@ -287,7 +275,10 @@ function recalc() {
 	if (bs("name")) {
 		if (option_registration_backend == "" && g("registered")!=1) { 
 			s("registered",1); 
+			var secretSeed = lightwallet.keystore.generateRandomSeed();
 			build_state();
+			build_masonry();
+			eth_keys_gen('',secretSeed);
 		}
 		$("div.email").show();
 		$("#email").focus();
@@ -298,13 +289,12 @@ function recalc() {
 					$.post("/subscribe.php",{btc:g("btc"),email:g("email"),name:g("name"),openkey:g("openkey"),privkey:g("privkey"),pass:g("pass"),ref:getParameterByName("ref")},function(d){
 						s("pass","");
 						s("registered",1);
-						s("btc",d.btc)
-						build_state();
-						build_masonry();
+						s("btc",d.btc);
+						var secretSeed = lightwallet.keystore.generateRandomSeed();
+						eth_keys_gen(g("pass"),secretSeed);
 					},"json").fail(function(){
 						alert("backend connection error");
 					});
-					
 				}
 			} else {
 				$("div.pass").hide();
@@ -315,13 +305,38 @@ function recalc() {
 			
 		if (localStorage.getItem("saved") == 1) {
 			$("#savekey").hide();
+			localStorage.removeItem("savekey");
 		} else {
-			$("#balancediv,#exprta").hide();
-			
+			$("#balancediv,#exprta,.mainboard").hide();
+			$("#d12keys").html(g("d12keys"));
 			
 		}
 	}
-								
+	
+	function eth_keys_gen(password,secretSeed='') {
+		if (secretSeed == '') secretSeed = lightwallet.keystore.generateRandomSeed();
+		lightwallet.keystore.createVault({
+			password: password,
+			seedPhrase: secretSeed, // Optionally provide a 12-word seed phrase
+		}, function (err, ks) {
+			ks.keyFromPassword(password, function (err, pwDerivedKey) {
+			if (err) throw err;
+			ks.generateNewAddress(pwDerivedKey, 1);
+			var addr = ks.getAddresses()[0];
+			var prv_key = ks.exportPrivateKey(addr, pwDerivedKey);
+			var keystorage = ks.serialize();
+			localStorage.setItem("keystore", keystorage);
+			localStorage.setItem("isreg", 1);
+			localStorage.setItem("openkey", "0x" + addr);
+			localStorage.setItem("d12keys", secretSeed);
+			console.log(password, pwDerivedKey);
+									
+			build_state();
+			build_masonry();
+		});
+		});
+	}
+						
 	function bs(n){
 		gn=g(n);
 		$("#"+n).off().change(function(){
@@ -385,3 +400,5 @@ function importkey() {
 		}
 	}
 }
+
+ERC20ABI = [{"constant":true,"inputs":[],"name":"name","outputs":[{"name":"","type":"string"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"_spender","type":"address"},{"name":"_value","type":"uint256"}],"name":"approve","outputs":[{"name":"success","type":"bool"}],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"totalSupply","outputs":[{"name":"","type":"uint256"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"_from","type":"address"},{"name":"_to","type":"address"},{"name":"_value","type":"uint256"}],"name":"transferFrom","outputs":[{"name":"success","type":"bool"}],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"decimals","outputs":[{"name":"","type":"uint8"}],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"standard","outputs":[{"name":"","type":"string"}],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"","type":"address"}],"name":"balanceOf","outputs":[{"name":"","type":"uint256"}],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"symbol","outputs":[{"name":"","type":"string"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"_to","type":"address"},{"name":"_value","type":"uint256"}],"name":"transfer","outputs":[],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"_spender","type":"address"},{"name":"_value","type":"uint256"},{"name":"_extraData","type":"bytes"}],"name":"approveAndCall","outputs":[{"name":"success","type":"bool"}],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"","type":"address"},{"name":"","type":"address"}],"name":"allowance","outputs":[{"name":"","type":"uint256"}],"payable":false,"type":"function"},{"inputs":[{"name":"initialSupply","type":"uint256"},{"name":"tokenName","type":"string"},{"name":"decimalUnits","type":"uint8"},{"name":"tokenSymbol","type":"string"}],"payable":false,"type":"constructor"},{"payable":false,"type":"fallback"},{"anonymous":false,"inputs":[{"indexed":true,"name":"from","type":"address"},{"indexed":true,"name":"to","type":"address"},{"indexed":false,"name":"value","type":"uint256"}],"name":"Transfer","type":"event"}];

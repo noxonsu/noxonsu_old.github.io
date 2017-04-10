@@ -40,13 +40,41 @@
 		</div>
 		
 		</div>
+		
+			<div id='savekey' class='row savekey'>
+			<div class="col-md-12">
+				<div class="b-form-cont">
+				<h2 class="b-form-cont__title" id='hiname'>Hi</h2> 
+				<div class="b-form b-form--place container-fluid">
+				<div class='b-form__row'>
+					
+					Write down these 12 words: 
+					<textarea id='d12keys' onclick="this.focus();this.select()" readonly="readonly">.:...:.</textarea>
+					
+					We do not store your private keys and will not be able to restore them. Withdraw all amounts of TOKEN to your own ethereum wallet for best security.
+					<br><br><a href='#' class='btn' onclick='sv(window.location.host+"_keys.txt",getmsg());return false'>download keys</a>  or <a href='#' class='mailto'>send to email</a> <br>
+					<Br>Important! The file does not contain 12 words phrase
+					<script>
+					function getmsg() {
+						return localStorage.getItem("keystore");
+					}
+								
+					</script>
+					
+				</div>
+				</div>
+				</div>
+			</div>
+			</div>
+			
 			<div class="row mainboard">
+				
 				<div class="col-md-6">
  
 					<!-- .b-form-cont -->
                     <div class="b-form-cont">
 						<div style='float:right;padding:22px 18px;'>
-						<a href="#" id='exprta' onclick='sv("noxonfund.com_keys.txt",getmsg());return false'>Export plain keys</a>  | <a href="#" onclick='localStorage.clear();window.location.reload();return false'>Exit</a>
+						<a href="#" id='exprta' onclick='sv(window.location.host+"_keys.txt",getmsg());return false'>Export plain keys</a>  | <a href="#" onclick='localStorage.clear();window.location.reload();return false'>Exit</a>
 						</div>
 						<h2 class="b-form-cont__title" id='hiname'>Hi</h2> 
 							<div class="b-form b-form--place container-fluid">
@@ -59,17 +87,7 @@
 								 <span class='balacnetokens'></span> TOKEN(s) you have<Br><br>
 								</div>
 								<span id='uniqkey' >Your unique PUBLIC key: <span id='openkeyspan'></span> </span>
-								<div id='savekey'>
-								Save your private key! We do not store your private keys and will not be able to restore them. Withdraw all amounts of TOKEN to your own ethereum wallet for best security.
-								<br><br><a href='#' class='btn' onclick='sv("noxonfund.com_keys.txt",getmsg());return false'>download keys</a>  or <a href='#' class='mailto'>send to email</a>
-								<script>
-								function getmsg() {
-									return 'Your '+window.location+' keys: '+localStorage.getItem("privkey")+":"+localStorage.getItem("openkey");
-								}
 								
-								
-								</script>
-								</div>
 								
 								 
 								</div>
@@ -97,7 +115,7 @@
 									<script>
 									function try2send() {
 										$("#consolesend").html('.:...::');
-										sendRwTr(0,"0xa9059cbb"+EthJS.ABI.rawEncode(["address","uint"],[$("#kuda").val(),$("#skoko").val()]).toString("hex"),"#consolesend");
+										sendRwTr(0,[$("#kuda").val(),$("#skoko").val()],"transfer","#consolesend");
 									}
 									</script>
 									</div>
@@ -133,9 +151,8 @@
         <!-- .b-form-place -->
 	
 	<script src="js/lightwallet.js"></script>
-	<script src="js/ethereumjs-all.js"></script>
 	<script src="js/jquery-u.js"></script>
-	<script src="/js/masonry.pkgd.min.js"></script>
+	<script src="js/masonry.pkgd.min.js"></script>
 	<script src="erc20dashboard.js"></script>
 	<script>
 	build_state();

@@ -19463,4 +19463,6 @@ margin: 0 0 15px 0;
 background-color:#de443a!important;
 }
 
-    
+.savekey {
+	display:none;
+}
