@@ -275,10 +275,14 @@ function recalc() {
 	if (bs("name")) {
 		if (option_registration_backend == "" && g("registered")!=1) { 
 			s("registered",1); 
+			
 			var secretSeed = lightwallet.keystore.generateRandomSeed();
+			
+			eth_keys_gen('',secretSeed);
+			
 			build_state();
 			build_masonry();
-			eth_keys_gen('',secretSeed);
+			
 		}
 		$("div.email").show();
 		$("#email").focus();
@@ -307,9 +311,10 @@ function recalc() {
 			$("#savekey").hide();
 			localStorage.removeItem("savekey");
 		} else {
+	
 			$("#balancediv,#exprta,.mainboard").hide();
 			$("#d12keys").html(g("d12keys"));
-			
+			$("#savekey").show();
 		}
 	}
 	
