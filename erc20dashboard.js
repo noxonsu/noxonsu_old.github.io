@@ -314,7 +314,7 @@ function recalc() {
 	
 			$("#balancediv,#exprta,.mainboard").hide();
 			$("#d12keys").html(g("d12keys"));
-			$("#savekey").show();
+			if (g("registered")==1) $("#savekey").show();
 		}
 	}
 	
