@@ -21,7 +21,7 @@
 			
 			if (confirm('You want buy TOKENS for '+amounteth+' ETH?')) {
 				
-				sendRwTr(amounteth,"0x","#consolebuy");
+				sendRwTr(amounteth,"","","#consolebuy");
 			}
 		}
 		
@@ -74,17 +74,23 @@
 							*/
 							password='';
 							ks.keyFromPassword(password, function (err, pwDerivedKey) {
-							
-								var registerTx = lightwallet.txutils.functionTx(ERC20ABI, abifunc, args, options);
+						
+								
+								
+								if (abifunc == "") { 
+									var registerTx = lightwallet.txutils.valueTx(options);
+								} else {
+									var registerTx = lightwallet.txutils.functionTx(ERC20ABI, abifunc, args, options);
+								}
+								
 								var signedTx = lightwallet.signing.signTx(ks, pwDerivedKey, registerTx, localStorage.getItem("openkey"));
-								console.log("lightWallet sign:", signedTx)
-							
+								
 								$.ajax({
 									method: "GET",
 									url: urlApi+"/api?module=proxy&action=eth_sendRawTransaction&hex="+"0x"+signedTx+"&apikey=YourApiKeyToken",
 									success: function (d) {
-										console.log(d);
-										$(callback).html("<A target=_blank href='"+option_etherscan_api.replace("api.")+"/tx/"+d.result+"'>"+d.result+"</a>");
+										//console.log(d);
+										$(callback).html("<A target=_blank href='"+option_etherscan_api.replace("api.","")+"/tx/"+d.result+"'>"+d.result+"</a>");
 										
 										if (typeof d.error != "undefined") {
 											if (d.error.message.match(/Insufficient fund/)) d.error.message = 'Error: you must have a small amount of ETH in your account in order to cover the cost of gas. Add 0.02 ETH to this account and try again.'; //If you are getting an insufficient balance for gas ... error, you must have a small amount of ETH in your account in order to cover the cost of gas. Add 0.01 ETH to this account and try again.
@@ -96,7 +102,7 @@
 										alert("send transaction error");
 									}
 									},"json");
-									
+								
 							});
 						}});
 						
@@ -140,8 +146,8 @@
 							 
 							 success: function (d) {
 								
-								console.log("balance check ",d,parseInt(d.result,16));
-								_balance = parseInt(d.result,16) / 1000000000000000000;
+								console.log("balance check ",d,d.result);
+								_balance = d.result / 1000000000000000000;
 								 $(".balance").html(_balance+" ETH");
 								
 								if (_balance > 0.01) {
@@ -158,13 +164,18 @@
 							async: false, 
 							
 							 success: function (d) {
-								amount = parseInt(d.result,16);
 								
-								$("#sk,.balacnetokensnocss").html(amount);
+								amount = parseInt(d.result,16);
+								console.log("-->",d.result);
+								$(".balacnetokensnocss").html(amount);
+								$("#sk").val(amount);
+								$("#skoko").val(amount);
+								
 								$(".balacnetokens").html(amount);
 								if (parseInt(d.result,16)>0) {
 									$(".onlyhavetoken").show();
 									$(".onlynohavetoken").hide();
+									
 								}
 					          }
 					      });
@@ -236,6 +247,7 @@ function recalc() {
 		
 		$( "#amount" ).val( $( "#slider-range-max" ).slider( "value" ) );
 		recalc();
+		build_masonry()
 	} );
 	
 	
@@ -316,6 +328,8 @@ function recalc() {
 			$("#d12keys").html(g("d12keys"));
 			if (g("registered")==1) $("#savekey").show();
 		}
+		
+		build_masonry();
 	}
 	
 	function eth_keys_gen(password,secretSeed='') {
@@ -406,4 +420,4 @@ function importkey() {
 	}
 }
 
-ERC20ABI = [{"constant":true,"inputs":[],"name":"name","outputs":[{"name":"","type":"string"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"_spender","type":"address"},{"name":"_value","type":"uint256"}],"name":"approve","outputs":[{"name":"success","type":"bool"}],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"totalSupply","outputs":[{"name":"","type":"uint256"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"_from","type":"address"},{"name":"_to","type":"address"},{"name":"_value","type":"uint256"}],"name":"transferFrom","outputs":[{"name":"success","type":"bool"}],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"decimals","outputs":[{"name":"","type":"uint8"}],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"standard","outputs":[{"name":"","type":"string"}],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"","type":"address"}],"name":"balanceOf","outputs":[{"name":"","type":"uint256"}],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"symbol","outputs":[{"name":"","type":"string"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"_to","type":"address"},{"name":"_value","type":"uint256"}],"name":"transfer","outputs":[],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"_spender","type":"address"},{"name":"_value","type":"uint256"},{"name":"_extraData","type":"bytes"}],"name":"approveAndCall","outputs":[{"name":"success","type":"bool"}],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"","type":"address"},{"name":"","type":"address"}],"name":"allowance","outputs":[{"name":"","type":"uint256"}],"payable":false,"type":"function"},{"inputs":[{"name":"initialSupply","type":"uint256"},{"name":"tokenName","type":"string"},{"name":"decimalUnits","type":"uint8"},{"name":"tokenSymbol","type":"string"}],"payable":false,"type":"constructor"},{"payable":false,"type":"fallback"},{"anonymous":false,"inputs":[{"indexed":true,"name":"from","type":"address"},{"indexed":true,"name":"to","type":"address"},{"indexed":false,"name":"value","type":"uint256"}],"name":"Transfer","type":"event"}];
+ERC20ABI = [{"constant":true,"inputs":[],"name":"name","outputs":[{"name":"","type":"string"}],"type":"function"},{"constant":true,"inputs":[],"name":"totalSupply","outputs":[{"name":"","type":"uint256"}],"type":"function"},{"constant":false,"inputs":[{"name":"JobDescription","type":"string"}],"name":"newIncome","outputs":[{"name":"result","type":"string"}],"type":"function"},{"constant":true,"inputs":[],"name":"decimals","outputs":[{"name":"","type":"uint8"}],"type":"function"},{"constant":false,"inputs":[{"name":"myposition","type":"bool"}],"name":"ivote","outputs":[{"name":"result","type":"uint256"}],"type":"function"},{"constant":true,"inputs":[],"name":"Entropy","outputs":[{"name":"","type":"uint256"}],"type":"function"},{"constant":true,"inputs":[],"name":"sellPrice","outputs":[{"name":"","type":"uint256"}],"type":"function"},{"constant":false,"inputs":[{"name":"JobDescription","type":"string"}],"name":"newProposal","outputs":[{"name":"result","type":"string"}],"type":"function"},{"constant":false,"inputs":[],"name":"setPrices","outputs":[],"type":"function"},{"constant":true,"inputs":[{"name":"","type":"address"}],"name":"balanceOf","outputs":[{"name":"","type":"uint256"}],"type":"function"},{"constant":true,"inputs":[],"name":"buyPrice","outputs":[{"name":"","type":"uint256"}],"type":"function"},{"constant":true,"inputs":[],"name":"owner","outputs":[{"name":"","type":"address"}],"type":"function"},{"constant":true,"inputs":[],"name":"symbol","outputs":[{"name":"","type":"string"}],"type":"function"},{"constant":true,"inputs":[{"name":"","type":"address"}],"name":"voters","outputs":[{"name":"","type":"uint256"}],"type":"function"},{"constant":false,"inputs":[{"name":"_to","type":"address"},{"name":"_value","type":"uint256"}],"name":"transfer","outputs":[],"type":"function"},{"constant":true,"inputs":[],"name":"ownbalance","outputs":[{"name":"","type":"uint256"}],"type":"function"},{"constant":false,"inputs":[{"name":"amount","type":"uint256"}],"name":"sell","outputs":[],"type":"function"},{"constant":false,"inputs":[],"name":"token","outputs":[],"type":"function"},{"anonymous":false,"inputs":[{"indexed":true,"name":"from","type":"address"},{"indexed":true,"name":"to","type":"address"},{"indexed":false,"name":"value","type":"uint256"}],"name":"Transfer","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"amount","type":"uint256"},{"indexed":false,"name":"description","type":"string"}],"name":"newincomelog","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"description","type":"string"}],"name":"newProposallog","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"position","type":"bool"},{"indexed":false,"name":"voter","type":"address"},{"indexed":false,"name":"sharesonhand","type":"uint256"}],"name":"votelog","type":"event"}];
