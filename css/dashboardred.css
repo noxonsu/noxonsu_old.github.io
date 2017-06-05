@@ -19110,6 +19110,18 @@ input[type=submit].styler[disabled] {
     -ms-user-select: none;
     user-select: none
 }
+.floating-label{
+	color: #de443a;
+	font-size: 12px;
+	position: relative;
+	top: 0;
+  margin-top: 0;
+	font-weight: bold;
+	z-index: 2;
+	opacity: 0;
+}
+
+
 .owl-carousel.owl-loaded {
     display: block
 }
