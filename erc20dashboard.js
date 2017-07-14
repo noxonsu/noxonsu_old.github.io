@@ -404,19 +404,17 @@ function sv(filename,text){
 }
 
 function importkey() {
-	if (key = prompt("Insert key here")) {
-	console.log(key);
-						
-	if (ex = key.match(/([A-z0-9]{32,64}?):([A-z0-9]{42,64}?)/)) {
-		localStorage.setItem("openkey",ex[2]);
-		localStorage.setItem("privkey",ex[1]);
-		s("registered",1);
-		s("saved",1);
-		build_state();
-		window.location.reload();
-	} else {
-		alert("Wrong key");
-		}
+	if (key = prompt("Insert 12 words key here")) {
+	
+	
+	eth_keys_gen('',key);
+	s("email","no@email.ru");
+	s("pass","");
+	s("registered",1);
+	
+	
+	build_state();
+	build_masonry();
 	}
 }
 
