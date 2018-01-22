@@ -11,7 +11,7 @@ All the logic of this panel working on the front-end (in the user's browser), th
 # Install
 
 <h2>1. Install MetaMask Chrome plugin (optional)</h2>
-You must have any ethereum wallet, we recommend Metamask. Metamask have connection to ethereum testnet - you will get 1 ETH on your address for testing. <a href="https://metamastk.io">https://metamastk.io</a>
+You must have any ethereum wallet, we recommend Metamask. Metamask have connection to ethereum testnet - you will get 1 ETH on your address for testing. <a href="https://metamask.io">https://metamask.io</a>
 <img src='https://static.tildacdn.com/tild6364-3031-4333-a537-383066326663/image02.gif'>
 
 <h2>2. Deploy ERC20 Contract using remix.ethereum.org</h2>
