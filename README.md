@@ -1,16 +1,13 @@
 # ERC20_widgets
 Minimal &amp; secure ERC20 dashboard/wallet. using lightwallet.js, ethereumjs &amp; etherscan as node provider
 
+Designed special for <a href="http://ethereum.org/token">ERC20 projects</a>. Just insert address of ERC20 smart contract and wallet ready to go. All the logic of this panel working on the front-end (in the user's browser), the user himself keeps his keys, never sends to our or another server.
+
+# Usage
+
 <a href="https://noxonsu.github.io/">Demo</a>
 
-Designed special for <a href="http://ethereum.org/token">ERC20 projects</a>. Just insert address of ERC20 smart contract and wallet ready to go. 
-
-# Secure
-All the logic of this panel working on the front-end (in the user's browser), the user himself keeps his keys, never sends to our or another server. Snx for lightwallet.js
-
-> We do not store private keys, be your own bank!
-
-# Install
+# Installation
 
 <h2>1. Install MetaMask Chrome plugin (optional)</h2>
 You must have any ethereum wallet, we recommend Metamask. Metamask have connection to ethereum testnet - you will get 1 ETH on your address for testing. <a href="https://metamask.io">https://metamask.io</a>
@@ -59,14 +56,15 @@ Click FORK at bottom of this page <img src='http://dl4.joxi.net/drive/2017/03/28
 
 <h2>4 Run the dashboard</h2>
 
-4.1 Go to cloned repositary  settings (1)  and rename repositary to {yourgithublogin}.github.io (2,3)<br>
+4.1 Go to cloned repositary  settings (1)  and rename repositary to something like "supercoinWallet" (2,3)<br>
 <img src="http://dl4.joxi.net/drive/2017/04/02/0004/2038/272374/74/0395e82e1e.jpg">
+4.2 Enable "Githube pages" feature (below on the settings page).
 <br>
-4.2 Go to Code  > erc2dashboard.js (1) > click Edit (2) and "ctrl + v" ERC20 contract from bufer to "erc20contract_address" var (3). <br>
+4.3 Go to Code  > erc2dashboard.js (1) > click Edit (2) and paste contract address from bufer to "erc20contract_address" var (3). <br>
 <img src='http://dl3.joxi.net/drive/2017/04/02/0004/2038/272374/74/29edaae900.jpg'>
 Then Click save. <br>
-4.3 Done. Now you can see your dashboard at https://{yourgithublogin}.github.io <br>
-4.4 Now you can add custom domain. https://help.github.com/articles/quick-start-setting-up-a-custom-domain/
+4.4 Done. Now you can see your dashboard at https://{yourgithublogin}.github.io/superWallet <br>
+4.5 Now you can add custom domain. https://help.github.com/articles/quick-start-setting-up-a-custom-domain/
 
 
 Copyright 2017
