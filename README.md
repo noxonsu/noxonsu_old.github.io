@@ -1,12 +1,14 @@
 # ERC20_widgets
 Minimal &amp; secure ERC20 dashboard/wallet. using lightwallet.js, ethereumjs &amp; etherscan as node provider
 
-<a href="https://noxonsu.github.io/">Demo</a> | <a href="http://noxonfund.com/dashboard.html" target="_blank">Full featured demo</a>
+<a href="https://noxonsu.github.io/">Demo</a>
 
 Designed special for <a href="http://ethereum.org/token">ERC20 projects</a>. Just insert address of ERC20 smart contract and wallet ready to go. 
 
 # Secure
 All the logic of this panel working on the front-end (in the user's browser), the user himself keeps his keys, never sends to our or another server. Snx for lightwallet.js
+
+> We do not store private keys, be your own bank!
 
 # Install
 
@@ -67,7 +69,7 @@ Then Click save. <br>
 4.4 Now you can add custom domain. https://help.github.com/articles/quick-start-setting-up-a-custom-domain/
 
 
-Copyright 2017 noxon
+Copyright 2017
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
