@@ -52,7 +52,7 @@ MINIMUM VIABLE TOKEN from https://ethereum.org/token
 
 <h2>3 Fork this project</h2>
 
-Click FORK at bottom of this page <img src='http://dl4.joxi.net/drive/2017/03/28/0004/2038/272374/74/8ad7b348b6.jpg'>. You may need to create your own GitHub account. 
+Click FORK at bottom of this page <img src='http://dl4.joxi.net/drive/2017/03/28/0004/2038/272374/74/8ad7b348b6.jpg'>. You may need to create your own GitHub account. f
 
 <h2>4 Run the dashboard</h2>
 
